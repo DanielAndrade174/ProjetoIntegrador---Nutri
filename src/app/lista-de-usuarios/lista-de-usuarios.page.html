@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="dark">
+
+    <ion-icon (click)="Home()" slot="start" name="arrow-back" class="iconeconf"></ion-icon>
+    <ion-icon slot="start" name="contact" class="iconeconf"></ion-icon>
+
+    <div class="div2">
+      <ion-title>
+        <img src="../../assets/imagens/logo2.png" class="logo">
+      </ion-title>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-toolbar color="success">
+    <ion-title>Usuarios</ion-title>
+    <ion-icon slot="end" name="search" class="iconeconf2"></ion-icon>
+    <ion-icon slot="end" name="more" class="iconeconf"></ion-icon>
+  </ion-toolbar>
+
+  <ion-item *ngFor="let Usuario of listaDeUsuarios">
+    <ion-thumbnail slot="start" (click)="perfilUsuario(usuario)">
+      <img src="../../assets/imagens/perfil usuario.png">
+    </ion-thumbnail>
+    <ion-label (click)="Chat()">
+      <ion-title>{{usuario?.nome}}</ion-title>
+      <p>{{usuario?.telefone}}</p>
+    </ion-label>
+  </ion-item>
+
+</ion-content>

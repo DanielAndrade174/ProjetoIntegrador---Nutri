@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from '../model/cliente';
+import { Nutricionista } from '../model/nutricionista';
 import * as firebase from 'firebase';
 import { NavParams, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-lista-de-clientes',
-  templateUrl: './lista-de-clientes.page.html',
-  styleUrls: ['./lista-de-clientes.page.scss'],
+  selector: 'app-lista-de-usuarios',
+  templateUrl: './lista-de-usuarios.page.html',
+  styleUrls: ['./lista-de-usuarios.page.scss'],
 })
-export class ListaDeClientesPage {
-
-  listaDeClientes: Cliente[] = [];
+export class ListaDeUsuariosPage implements OnInit {
+  listaDeUsuarios: Usuarios[] = [];
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
 
@@ -24,39 +23,51 @@ export class ListaDeClientesPage {
     this.getList();
   }
 
-  viewCliente(obj: Cliente) {
-    this.router.navigate(['/cliente-view', { 'cliente': obj.id }]);
+  viewUsuario(obj: Usuarios) {
+    this.router.navigate(['/usuario-view', { 'usuario': obj.id }]);
     this.presentLoading();
   }
 
+  Chat() {
+    this.router.navigate(['/chat-nutri']);
+  }
+
+  perfilNutri(obj: Usuario) {
+    this.router.navigate(['/perfil-usuario', { 'usuario': obj.id }]);
+  }
+
   getList() {
-    var ref = firebase.firestore().collection("cliente");
+    var ref = firebase.firestore().collection("usuario");
     ref.get().then(query => {
       query.forEach(doc => {
-        let c = new Cliente();
+        let c = new Usuario();
         c.setDados(doc.data());
         c.id = doc.id;
-        this.listaDeClientes.push(c);
+        this.listaDeUsuarios.push(c);
       });
     });
   }
 
 
-  remove(obj: Cliente) {
-    var ref = firebase.firestore().collection("cliente");
+  remove(obj: Usuario) {
+    var ref = firebase.firestore().collection("usuario");
     ref.doc(obj.id).delete()
       .then(() => {
-        this.listaDeClientes = [];
+        this.listaDeUsuarios = [];
         this.getList();
       }).catch(() => {
         console.log('Erro ao atualizar');
       })
   }
 
+  Home() {
+    this.router.navigate(['/list']);
+  }
+
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Hellooo',
+      message: 'Carregando',
       duration: 2000
     });
     await loading.present();
