@@ -36,8 +36,8 @@ export class ListPage implements OnInit {
 
   }
 
-  ListaDeNutricionistas(){
-    this.router.navigate(['/lista-de-nutricionistas'])
+  ListaDeUsuarios(){
+    this.router.navigate(['/lista-de-usuarios'])
   }
 
   cadastrar(){

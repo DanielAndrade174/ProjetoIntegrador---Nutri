@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-icon (click)="Home()" slot="start" name="arrow-back" class="iconeconf"></ion-icon>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class=”loginPage” scroll=”false”>
+  <div>
+    <ion-card>
+      <ion-card-header>
+        <img src="{{imagem}}" class="circle">
+        <ion-card-title>{{perfilUsuario?.nome}}</ion-card-title>
+        <ion-card-subtitle>{{perfilUsuario?.endereco}}</ion-card-subtitle>
+        <ion-card-subtitle>{{perfilUsuario?.telefone}}</ion-card-subtitle>
+        <ion-card-subtitle>{{perfilUsuario?.email}}</ion-card-subtitle>
+        <hr>
+        <ion-button expand="full" color="primary" (click)="Chat()">Enviar mensagem</ion-button>
+
+        
+      </ion-card-header>
+    </ion-card>
+  </div>
+
+</ion-content>

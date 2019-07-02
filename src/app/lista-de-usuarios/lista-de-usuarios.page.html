@@ -23,9 +23,9 @@
     <ion-icon slot="end" name="more" class="iconeconf"></ion-icon>
   </ion-toolbar>
 
-  <ion-item *ngFor="let Usuario of listaDeUsuarios">
+  <ion-item *ngFor="let usuario of listaDeUsuarios">
     <ion-thumbnail slot="start" (click)="perfilUsuario(usuario)">
-      <img src="../../assets/imagens/perfil usuario.png">
+      <img src="{{usuario?.imagem}}" class="circle">
     </ion-thumbnail>
     <ion-label (click)="Chat()">
       <ion-title>{{usuario?.nome}}</ion-title>

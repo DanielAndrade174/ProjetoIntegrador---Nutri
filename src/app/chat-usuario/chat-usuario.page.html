@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-icon (click)="Home()" slot="start" name="arrow-back" class="iconeconf"></ion-icon>
+    <ion-title>Chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding *ngIf="!isLoading">
+  <div class="fd-login">
+
+    <div class="message-wrap">
+
+      <div *ngFor="let msg of conversa">
+
+        <div class="sender">
+
+          <ion-grid>
+            <ion-row>
+              <ion-col col-2 text-left>
+               
+              </ion-col>
+              <ion-col col-10>
+                <p>{{msg.mensagem}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+ 
+      </div>
+
+
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar color="dark">
+    <ion-textarea placeholder="Digite aqui..." name="message" slot="start" #txtarea></ion-textarea>
+    <ion-icon slot="end" name="attach" color="medium" class="iconeconf"></ion-icon>
+    <ion-icon slot="end" name="camera" color="medium" class="iconeconf"></ion-icon>
+    <ion-icon slot="end" name="send" color="medium" class="iconeconf" (click)="enviarMensagem()"></ion-icon>
+  </ion-toolbar>
+
+</ion-footer>
