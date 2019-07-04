@@ -23,13 +23,13 @@
     <ion-icon slot="end" name="more" class="iconeconf"></ion-icon>
   </ion-toolbar>
 
-  <ion-item *ngFor="let usuario of listaDeUsuarios">
+  <ion-item *ngFor="let usuario of idList">
     <ion-thumbnail slot="start" (click)="perfilUsuario(usuario)">
-      <img src="{{usuario?.imagem}}" class="circle">
+      <img src="" class="circle">
     </ion-thumbnail>
-    <ion-label (click)="Chat()">
-      <ion-title>{{usuario?.nome}}</ion-title>
-      <p>{{usuario?.telefone}}</p>
+    <ion-label (click)="Chat(usuario)">
+      
+      <p>{{usuario}}</p>
     </ion-label>
   </ion-item>
 

@@ -15,17 +15,19 @@ export class ListaDeUsuariosPage implements OnInit {
   listaDeUsuarios: Usuario[] = [];
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
+  idList : String[] = [];
 
   constructor(public router: Router, public loadingController: LoadingController) {
-
+    
    }
 
  ngOnInit() {
     this.getList();
+    
   }
 
-  Chat() {
-    this.router.navigate(['/chat-usuario']);
+  Chat(usuario : string) {
+    this.router.navigate(['/chat-usuario', { 'usuario': usuario }]);
   }
 
   perfilUsuario(obj: Usuario) {
@@ -33,23 +35,16 @@ export class ListaDeUsuariosPage implements OnInit {
   }
 
   getList() {
-    var ref = firebase.firestore().collection("usuario");
-    ref.get().then(query => {
-      query.forEach(doc => {
-        let c = new Usuario();
-        c.setDados(doc.data());
-        c.id = doc.id;
+    
+    var ref = firebase.firestore().collection("mensagem").doc("u90pFy6blISIUlATnzH8Pxqm5c33");
+    ref.get().then(doc => {
 
-        let ref = firebase.storage().ref().child(`usuario/${doc.id}.jpg`).getDownloadURL().then(url => {
-          c.imagem = url;
-
-          this.listaDeUsuarios.push(c);
-        })
-        .catch(err=>{
-         this.listaDeUsuarios.push(c);
-         })
-      });
-    });
+       this.idList.push(doc.id);
+        
+      }).catch(err=>{
+        console.log("erro 1")
+      })
+   
   }
 
   Home() {

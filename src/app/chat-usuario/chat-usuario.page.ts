@@ -19,7 +19,7 @@ export class ChatUsuarioPage implements OnInit {
   idUsuario : string;
   firestore = firebase.firestore();
   settings = {timestampsInSnapshots: true};
-
+  idUsuarioUser : string; // usuario com quem estou conversando
   conversa : Mensagem[] = [];
 
   formGroup : FormGroup;
@@ -33,13 +33,14 @@ export class ChatUsuarioPage implements OnInit {
     private formBuilder : FormBuilder, ) {
 
      
-     
+      this.idUsuarioUser = this.activatedRoute.snapshot.paramMap.get('usuario');
+      console.log("Usuario 1 "+this.idUsuarioUser)
 
       this.firebaseauth.authState.subscribe(obj=>{
         this.idUsuario = this.firebaseauth.auth.currentUser.uid;
-
+       console.log("Usuario 2"+this.idUsuario)
             
-        let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idNutricionista);
+      let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser);
         ref.onSnapshot(doc=> {
 
           doc.docChanges().forEach(c =>{
@@ -58,15 +59,12 @@ export class ChatUsuarioPage implements OnInit {
 
   ngOnInit() {
 
-    
-
-    
   }
 
 
 
   atualiza(){
-    let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idNutricionista);
+    let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser);
     ref.get().then(doc =>{
       doc.forEach(c=>{
         
@@ -89,10 +87,10 @@ export class ChatUsuarioPage implements OnInit {
    });
 
 
-   let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idNutricionista).add(this.formGroup.value)
+   let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser).add(this.formGroup.value)
    .then(resp=>{
       console.log('Cadastrado com sucesso');
-      this.firestore.doc('mensagem/'+this.idNutricionista).collection(this.idUsuario).add(this.formGroup.value)
+      this.firestore.doc('mensagem/'+this.idUsuarioUser).collection(this.idUsuario).add(this.formGroup.value)
       
    .then(resp=>{
       console.log('Cadastrado com sucesso');
