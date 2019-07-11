@@ -9,3 +9,24 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
+
+:root{
+    .menu-lateral{
+        --background: none;
+        background-color: #F8F8FF;
+        background-position: center center;
+       
+    }
+
+    .menu-lateral *{
+    color: #000 !important;
+    font-family: Monotype Corsiva;
+    font-size: 25px;
+    
+    }
+    .menu-lateral ion-item, .menu-lateral ion-menu-toggle,  .menu-lateral ion-list{
+        --background: none !important;
+        background-color: #F8F8FF;
+        
+    } 
+}

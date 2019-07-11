@@ -4,6 +4,7 @@ import { NavParams, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from '../model/usuario';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-lista-de-usuarios',
@@ -11,18 +12,24 @@ import { Usuario } from '../model/usuario';
   styleUrls: ['./lista-de-usuarios.page.scss'],
 })
 export class ListaDeUsuariosPage implements OnInit {
-
+  idUsuario : string;
   listaDeUsuarios: Usuario[] = [];
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
   idList : String[] = [];
 
-  constructor(public router: Router, public loadingController: LoadingController) {
+  constructor(public firebaseauth : AngularFireAuth,public router: Router, public loadingController: LoadingController) {
     
+    this.firebaseauth.authState.subscribe(obj=>{
+      this.idUsuario = this.firebaseauth.auth.currentUser.uid;
+     console.log("Usuario 2"+this.idUsuario)
+     this.getList();
+    });
+  
    }
 
  ngOnInit() {
-    this.getList();
+    
     
   }
 
@@ -36,7 +43,7 @@ export class ListaDeUsuariosPage implements OnInit {
 
   getList() {
     
-    var ref = firebase.firestore().collection("mensagem").doc("u90pFy6blISIUlATnzH8Pxqm5c33");
+    var ref = firebase.firestore().collection("mensagem").doc(this.idUsuario);
     ref.get().then(doc => {
 
        this.idList.push(doc.id);
