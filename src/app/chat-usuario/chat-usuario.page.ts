@@ -31,15 +31,15 @@ export class ChatUsuarioPage implements OnInit {
     public nav: NavController,
     public firebaseauth : AngularFireAuth,
     private formBuilder : FormBuilder, ) {
-
-     
+      
+      
       this.idUsuarioUser = this.activatedRoute.snapshot.paramMap.get('usuario');
       console.log("Usuario 1 "+this.idUsuarioUser)
-
+      
       this.firebaseauth.authState.subscribe(obj=>{
         this.idUsuario = this.firebaseauth.auth.currentUser.uid;
-       console.log("Usuario 2"+this.idUsuario)
-            
+       console.log("Usuario 2 "+this.idUsuario)
+      
       let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser);
         ref.onSnapshot(doc=> {
 

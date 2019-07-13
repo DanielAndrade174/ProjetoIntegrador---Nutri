@@ -19,17 +19,20 @@
 <ion-content>
   <ion-toolbar color="success">
     <ion-title>Usuarios</ion-title>
-    <ion-icon slot="end" name="search" class="iconeconf2"></ion-icon>
-    <ion-icon slot="end" name="more" class="iconeconf"></ion-icon>
+     <ion-row>
+      <ion-searchbar  [ngStyle]="{'display':filtroBox}" #textoBusca animated placeholder="Procurar" (ionChange)="busca()"  (ionChange)="presentActionSheet()"></ion-searchbar>
+     </ion-row>
+     
+     
+     <ion-icon name="search" slot="end" size="large" id="market" (click)="showFilter()" class=""></ion-icon>
   </ion-toolbar>
 
   <ion-item *ngFor="let usuario of idList">
     <ion-thumbnail slot="start" (click)="perfilUsuario(usuario)">
-      <img src="" class="circle">
+      <img src="{{usuario?.imagem}}" class="circle">
     </ion-thumbnail>
     <ion-label (click)="Chat(usuario)">
-      
-      <p>{{usuario}}</p>
+      <p>{{usuario.nome}}</p>
     </ion-label>
   </ion-item>
 
