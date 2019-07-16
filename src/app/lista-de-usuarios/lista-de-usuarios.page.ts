@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from '../model/usuario';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Mensagem } from '../model/mensagem';
 
 @Component({
   selector: 'app-lista-de-usuarios',
@@ -16,7 +17,7 @@ export class ListaDeUsuariosPage implements OnInit {
   @ViewChild("textoBusca") textoBusca;
 
   idUsuario : string;
-  listaDeUsuarios: Usuario[] = [];
+  listaDeUsuarios: Mensagem[] = [];
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
   filtroBox = 'none'
@@ -48,25 +49,36 @@ export class ListaDeUsuariosPage implements OnInit {
 
   getList() {
     
-    var ref = firebase.firestore().collection("mensagem").doc(this.idUsuario);
+    var ref = firebase.firestore().collection("nutricionista").doc(this.idUsuario).collection('mensagem');
     ref.get().then(doc => {
 
-
-       if(doc.exists){
-
-        doc.data().mensagens.forEach(element => {
-          console.log(element);
-          this.idList.push(element);
-        });
-       
+      let add = true;
       
-       }
-        
-      }).catch(err=>{
-        console.log("erro 1")
-      })
+       doc.forEach(item=>{
+
+        this.listaDeUsuarios.forEach(i=>{
+
+          if(i.de == item.data().de || i.de == this.idUsuario)
+          add = false;
+
+        });
+
+
+         let u = new Mensagem();
+          u.de = item.data().de;
+
+          if(add == true)
+          this.listaDeUsuarios.push(u);
+       });
+
+
+       console.log(this.listaDeUsuarios);
+       });
+  
    
   }
+
+
 
   Home() {
     this.router.navigate(['/list']);
@@ -82,6 +94,7 @@ export class ListaDeUsuariosPage implements OnInit {
 
   }
 
+  /*
   busca() {
     this.listaDeUsuarios = [];
     var ref = firebase.firestore().collection("mensagens");
@@ -109,7 +122,7 @@ export class ListaDeUsuariosPage implements OnInit {
 
     //this.router.navigate(['/Prato', { 'filtro': "busca" }]);
   }
-
+*/
   showFilter(){
     if(this.filtroBox=='none')
       this.filtroBox = 'block'

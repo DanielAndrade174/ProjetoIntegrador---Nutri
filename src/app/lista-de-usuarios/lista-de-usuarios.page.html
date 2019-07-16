@@ -27,12 +27,13 @@
      <ion-icon name="search" slot="end" size="large" id="market" (click)="showFilter()" class=""></ion-icon>
   </ion-toolbar>
 
-  <ion-item *ngFor="let usuario of idList">
+  <ion-item *ngFor="let usuario of listaDeUsuarios">
     <ion-thumbnail slot="start" (click)="perfilUsuario(usuario)">
       <img src="{{usuario?.imagem}}" class="circle">
     </ion-thumbnail>
-    <ion-label (click)="Chat(usuario)">
-      <p>{{usuario.nome}}</p>
+    <ion-label (click)="Chat(usuario.de)">
+      <p>{{usuario.de}}</p>
+      
     </ion-label>
   </ion-item>
 

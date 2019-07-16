@@ -19,7 +19,7 @@ export class ChatUsuarioPage implements OnInit {
   idUsuario : string;
   firestore = firebase.firestore();
   settings = {timestampsInSnapshots: true};
-  idUsuarioUser : string; // usuario com quem estou conversando
+
   conversa : Mensagem[] = [];
 
   formGroup : FormGroup;
@@ -33,75 +33,72 @@ export class ChatUsuarioPage implements OnInit {
     private formBuilder : FormBuilder, ) {
       
       
-      this.idUsuarioUser = this.activatedRoute.snapshot.paramMap.get('usuario');
-      console.log("Usuario 1 "+this.idUsuarioUser)
+      this.idUsuario = this.activatedRoute.snapshot.paramMap.get('usuario');
+      
+
       
       this.firebaseauth.authState.subscribe(obj=>{
-        this.idUsuario = this.firebaseauth.auth.currentUser.uid;
+        this.idNutricionista = this.firebaseauth.auth.currentUser.uid;
+
        console.log("Usuario 2 "+this.idUsuario)
       
-      let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser);
-        ref.onSnapshot(doc=> {
 
-          doc.docChanges().forEach(c =>{
-            let m = new Mensagem();
-            m.setDados(c.doc.data());
-            this.conversa.push(m);
-          })
-
-        
-        });
-
-  
       });
 
     }
 
   ngOnInit() {
 
+    let ref = this.firestore.collection('nutricionista').doc(this.idNutricionista).collection("mensagem");
+        ref.onSnapshot(doc=> {
+
+          doc.docChanges().forEach(c =>{
+            
+              if(c.doc.data().para==this.idNutricionista || c.doc.data().de==this.idNutricionista){
+                let m = new Mensagem();
+              
+                m.setDados(c.doc.data());
+                this.conversa.push(m);
+              }
+          })
+
+        });
+
+
   }
 
 
 
-  atualiza(){
-    let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser);
-    ref.get().then(doc =>{
-      doc.forEach(c=>{
-        
-       let m = new Mensagem();
-        m.setDados(c.data());
-        this.conversa.push(m);
-        
-      })
-      
-    })
-
-
-  }
-
+ 
   enviarMensagem(){
 
     this.formGroup = this.formBuilder.group({
       data : [ new Date()],
-      mensagem : [this.txtarea.value]
+      mensagem : [this.txtarea.value],
+      de : [this.idNutricionista],
+      para : [this.idUsuario],
+
    });
 
 
-   let ref = this.firestore.doc('mensagem/'+this.idUsuario).collection(this.idUsuarioUser).add(this.formGroup.value)
+   let ref = this.firestore.collection('usuario').doc(this.idUsuario).collection("mensagem").add(this.formGroup.value)
    .then(resp=>{
       console.log('Cadastrado com sucesso');
-      this.firestore.doc('mensagem/'+this.idUsuarioUser).collection(this.idUsuario).add(this.formGroup.value)
-      
-   .then(resp=>{
-      console.log('Cadastrado com sucesso');
+      this.enviarNutricionista();
     }).catch(function(){
       console.log('Erro ao cadastrar');
     })
 
-    }).catch(function(){
-      console.log('Erro ao cadastrar');
-    })
+  }
 
+  enviarNutricionista(){
+
+    let ref = this.firestore.collection('nutricionista').doc(this.idNutricionista).collection("mensagem").add(this.formGroup.value)
+    .then(resp=>{
+       console.log('Cadastrado com sucesso');
+     }).catch(function(){
+       console.log('Erro ao cadastrar');
+     })
   }
 
   Home() {
