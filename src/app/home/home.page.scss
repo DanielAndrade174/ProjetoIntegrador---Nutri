@@ -4,8 +4,10 @@
 }
 
 .logo{
-  width: 250px;
-  height: 180px;
+  width: 340px;
+  height: 240px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 
@@ -20,9 +22,22 @@ div{
 
 ion-title{
   font-family: Monotype Corsiva;
-  font-size: 22px;
+  font-size: 32px;
+  text-align: center;
 }
 
 ion-content {
   --background: #F8F8FF;
+}
+
+p{
+  font-size: 20px;
+}
+
+.senha{
+  margin-bottom: 15px;
+}
+
+.botaologar{
+  margin-bottom: 10px;
 }
